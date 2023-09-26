@@ -41,9 +41,7 @@
     "bin/*"
   ],
   "dependencies": {
-    "@maizzle/cli": "^1.5.1",
     "autoprefixer": "^10.4.14",
-    "browser-sync": "^2.28.3",
     "color-shorthand-hex-to-six-digit": "^3.0.2",
     "email-comb": "^5.2.0",
     "front-matter": "^4.0.0",
@@ -53,7 +51,6 @@
     "is-url-superb": "^5.0.0",
     "juice": "^9.0.0",
     "lodash": "^4.17.20",
-    "ora": "^5.1.0",
     "postcss": "^8.4.21",
     "postcss-import": "^15.0.0",
     "postcss-merge-longhand": "^6.0.0",
