@@ -10,12 +10,11 @@ const Plaintext = require('../plaintext')
 
 const render = require('./to-string')
 
-module.exports = async (env, spinner, config) => {
+module.exports = async (env, config) => {
   process.env.NODE_ENV = env || 'local'
 
   if (isEmpty(config)) {
     config = await Config.getMerged(env).catch(error => {
-      spinner.fail('Build failed')
       throw error
     })
   }
@@ -104,7 +103,7 @@ module.exports = async (env, spinner, config) => {
       })
 
       if (templates.length === 0) {
-        spinner.warn(`Error: no files with the .${extensions} extension found in ${templateConfig.source}`)
+        console.warn(`Error: no files with the .${extensions} extension found in ${templateConfig.source}`)
         return
       }
 
@@ -170,14 +169,11 @@ module.exports = async (env, spinner, config) => {
         } catch (error) {
           switch (config.build.fail) {
             case 'silent':
-              spinner.warn(`Failed to compile template: ${path.basename(file)}`)
               break
             case 'verbose':
-              spinner.warn(`Failed to compile template: ${path.basename(file)}`)
               console.error(error)
               break
             default:
-              spinner.fail(`Failed to compile template: ${path.basename(file)}`)
               throw error
           }
         }
@@ -190,14 +186,14 @@ module.exports = async (env, spinner, config) => {
           if (fs.existsSync(source)) {
             await fs
               .copy(source, path.join(templateConfig.destination.path, assets.destination))
-              .catch(error => spinner.warn(error.message))
+              .catch(error => console.warn(error.message))
           }
         }
       } else {
         if (fs.existsSync(assets.source)) {
           await fs
             .copy(assets.source, path.join(templateConfig.destination.path, assets.destination))
-            .catch(error => spinner.warn(error.message))
+            .catch(error => console.warn(error.message))
         }
       }
 
