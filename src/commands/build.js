@@ -8,8 +8,8 @@ const build = async (env = 'local', config = {}) => {
   const spinner = ora('Building emails...').start()
 
   try {
-    const {files, parsed} = await Output.toDisk(env, spinner, config)
-
+    console.log(Output)
+    const { parsed, compiled } = await Output.compile(env, spinner, config)
     const elapsedSeconds = (Date.now() - start) / 1000
 
     if (get(config, 'build.command') === 'serve') {
@@ -22,7 +22,7 @@ const build = async (env = 'local', config = {}) => {
       spinner.succeed(`Built ${parsed.length} templates in ${elapsedSeconds}s`)
     }
 
-    return {files}
+    return { compiled }
   } catch (error) {
     spinner.fail(error.message)
     throw error
